@@ -1,87 +1,122 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | CharacterMovement</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-mobile-warning">
-        WebGL builds are not supported on mobile devices.
-      </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">CharacterMovement</div>
-      </div>
-    </div>
-    <script>
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/Build.loader.js";
-      var config = {
-        dataUrl: buildUrl + "/Build.data",
-        frameworkUrl: buildUrl + "/Build.framework.js",
-        codeUrl: buildUrl + "/Build.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "KiwiGames",
-        productName: "CharacterMovement",
-        productVersion: "1.0",
-      };
 
-      var container = document.querySelector("#unity-container");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
-      var mobileWarning = document.querySelector("#unity-mobile-warning");
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>CharacterMovement</title>
+	<link rel="shortcut icon" href="TemplateData/favicon.ico" />
+	<link rel="stylesheet" href="TemplateData/style.css" />
 
-      // By default Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        // Avoid draining fillrate performance on mobile devices,
-        // and default/override low DPI mode on mobile browsers.
-        config.devicePixelRatio = 1;
-        mobileWarning.style.display = "block";
-        setTimeout(() => {
-          mobileWarning.style.display = "none";
-        }, 5000);
-      } else {
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
-      }
-      loadingBar.style.display = "block";
+	<!-- axios, used for making HTTP requests from js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
-    </script>
-  </body>
+	<!-- WebGLFileUploader -->
+	<script src="js/npo.src.js"></script>
+
+
+	<link rel="stylesheet" href="css/file_uploader.css" />
+</head>
+
+<body>
+	<div id="unity-container" class="unity-desktop">
+		<canvas id="unity-canvas"></canvas>
+		<div id="unity-loading-bar">
+			<img id="unity-logo" src="TemplateData/unity-logo-dark.png"></img>
+			<div id="unity-progress-bar-empty">
+				<div id="unity-progress-bar-full"></div>
+			</div>
+			<p id="progressText">0%</p>
+		</div>
+		<!--<div id="unity-footer">
+			<div id="unity-webgl-logo"></div>
+			<div id="unity-fullscreen-button"></div>
+			<div id="unity-build-title">CharacterMovement</div>
+		</div>-->
+	</div>
+	<script>
+		var buildUrl = "Build";
+		var loaderUrl = buildUrl + "/Build.loader.js";
+		var config = {
+			dataUrl: buildUrl + "/Build.data",
+			frameworkUrl: buildUrl + "/Build.framework.js",
+			codeUrl: buildUrl + "/Build.wasm",
+			        streamingAssetsUrl: "StreamingAssets",
+			companyName: "KiwiGames",
+			productName: "CharacterMovement",
+			productVersion: "1.0",
+		};
+
+		var container = document.querySelector("#unity-container");
+		var canvas = document.querySelector("#unity-canvas");
+		var loadingBar = document.querySelector("#unity-loading-bar");
+		var progressBarFull = document.querySelector("#unity-progress-bar-full");
+		var progressText = document.querySelector("#progressText");
+		//   var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+		if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+			container.className = "unity-mobile";
+			config.devicePixelRatio = 1;
+		} else {
+			canvas.style.width = "100%";
+			canvas.style.height = "100%";
+		}
+		canvas.style.background = "url('" + buildUrl + "/webgl.jpg') center / cover";
+		loadingBar.style.display = "block";
+
+		var script = document.createElement("script");
+		script.src = loaderUrl;
+		script.onload = () => {
+			createUnityInstance(canvas, config, (progress) => {
+				progressBarFull.style.width = 100 * progress + "%";
+				progressText.innerHTML = "Loading... " + parseInt(100 * progress) + "%";
+			}).then((unityInstance) => {
+				loadingBar.style.display = "none";
+				progressBarFull.style.width = "100%";
+				progressText.innerHTML = "Loading... 100%";
+				//   fullscreenButton.onclick = () => {
+				//     unityInstance.SetFullscreen(1);
+				//   };
+			}).catch((message) => {
+				alert(message);
+			});
+		};
+		document.body.appendChild(script);
+
+		window.onbeforeunload = function () {
+			return "Are you sure you want to close the window?";
+		}
+	</script>
+
+	<script>
+			(function () {
+				//Methods to resize the unity window to make it responsively change the player size 
+				//const container = document.querySelector('#unity-container');
+
+				const initialDimensions = { width: parseInt(container.style.width, 10), height: parseInt(container.style.height, 10) };
+				container.style.width = '100%';
+				container.style.height = '100%';
+
+				const setDimensions = () => {
+					container.style.position = 'absolute';
+
+					var winW = parseInt(window.getComputedStyle(container).width, 10);
+					var winH = parseInt(window.getComputedStyle(container).height, 10);
+
+					var scale = Math.min(winW / initialDimensions.width, winH / initialDimensions.height);
+
+					var fitW = Math.round(initialDimensions.width * scale * 100) / 100;
+					var fitH = Math.round(initialDimensions.height * scale * 100) / 100;
+
+					canvas.setAttribute('width', fitW);
+					canvas.setAttribute('height', fitH);
+				}
+
+				setDimensions();
+			})();
+	</script>
+
+</body>
+
 </html>
