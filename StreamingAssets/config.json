@@ -1,0 +1,4 @@
+{
+    "apiUrl": "http://omen:5051/api",
+    "debug": true
+}
