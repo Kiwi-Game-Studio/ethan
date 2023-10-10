@@ -1,0 +1,37 @@
+{
+  "project_info": {
+    "project_number": "1079972164500",
+    "firebase_url": "https://dominoes-unity.firebaseio.com",
+    "project_id": "dominoes-unity",
+    "storage_bucket": "dominoes-unity.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079972164500:ios:91fc4f9aae262f72de1581",
+        "android_client_info": {
+          "package_name": "com.atomicbeachgames.dominoes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1079972164500-ms8t9h8u7soatkvepihs03n7ojf9g5rq.apps.googleusercontent.com"
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa7iwXn7rXDs3f9UfoCzD5yCz09WCeYas"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 0
+        },
+        "appinvite_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
