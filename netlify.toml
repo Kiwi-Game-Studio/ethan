@@ -1,5 +1,6 @@
 [build]
-  publish = "build"
+  publish = "Build"
+  command = ""
 
 [[headers]]
   for = "/*.js.unityweb"
