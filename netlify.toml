@@ -1,0 +1,23 @@
+[build]
+  publish = "build"
+
+[[headers]]
+  for = "/*.js.unityweb"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Content-Encoding = "gzip"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/*.data.unityweb"
+  [headers.values]
+    Content-Type = "application/octet-stream"
+    Content-Encoding = "gzip"
+    Cache-Control = "public, max-age=31536000"
+
+[[headers]]
+  for = "/*.wasm.unityweb"
+  [headers.values]
+    Content-Type = "application/wasm"
+    Content-Encoding = "gzip"
+    Cache-Control = "public, max-age=31536000"
