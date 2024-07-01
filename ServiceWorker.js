@@ -1,9 +1,9 @@
 const cacheName = "DefaultCompany-PianoLand-0.1";
 const contentToCache = [
-    "Build/ethan.loader.js",
-    "Build/ethan.framework.js",
-    "Build/ethan.data",
-    "Build/ethan.wasm",
+    "Build/pianoland.loader.js",
+    "Build/pianoland.framework.js",
+    "Build/pianoland.data",
+    "Build/pianoland.wasm",
     "TemplateData/style.css"
 
 ];
