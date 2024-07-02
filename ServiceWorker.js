@@ -25,11 +25,15 @@ self.addEventListener('fetch', function (e) {
 
       response = await fetch(e.request);
 
+      const requestURL = new URL(e.request.url);
+      
       // Only cache supported schemes (http and https)
-      if (e.request.url.startsWith('http://') || e.request.url.startsWith('https://')) {
+      if (requestURL.protocol === 'http:' || requestURL.protocol === 'https:') {
           const cache = await caches.open(cacheName);
           console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
           cache.put(e.request, response.clone());
+      } else {
+          console.log(`[Service Worker] Not caching unsupported protocol: ${e.request.url}`);
       }
       
       return response;
