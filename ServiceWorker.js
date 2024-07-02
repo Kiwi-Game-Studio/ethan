@@ -18,6 +18,10 @@ self.addEventListener('install', function (e) {
 });
 
 self.addEventListener('fetch', function (e) {
+  if (!e.request.url.startsWith('http')) {
+    console.log(`[Service Worker] Skipping non-HTTP request: ${e.request.url}`);
+    return;
+    }
     e.respondWith((async function () {
       let response = await caches.match(e.request);
       console.log(`[Service Worker] Fetching resource: ${e.request.url}`);
