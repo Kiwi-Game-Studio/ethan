@@ -1,16 +1,20 @@
-const cacheName = "DefaultCompany-PianoLand-0.1"; // Version incremented
+const cacheName = "DefaultCompany-PianoLand-0.1"; // Incremented version for cache
+
 const contentToCache = [
     "Build/pianoland.loader.js",
     "Build/pianoland.framework.js",
     "Build/pianoland.data",
     "Build/pianoland.wasm",
     "TemplateData/style.css",
-    "Il2CppData/Metadata/global-metadata.dat"
+    "Il2CppData/Metadata/global-metadata.dat",
+    "RuntimeInitializeOnLoads.json",
+    "ScriptingAssemblies.json",
+    "GlobalGameManagers"
 ];
 
 self.addEventListener('install', function (e) {
     console.log('[Service Worker] Install');
-    
+
     e.waitUntil((async function () {
         const cache = await caches.open(cacheName);
         console.log('[Service Worker] Caching all: app shell and content');
@@ -51,7 +55,7 @@ self.addEventListener('fetch', function (e) {
         const cache = await caches.open(cacheName);
         console.log(`[Service Worker] Caching new resource: ${e.request.url}`);
         cache.put(e.request, response.clone());
-        
+
         return response;
     })());
 });

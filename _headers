@@ -1,0 +1,20 @@
+/*  
+  Cache-Control: public, max-age=0, must-revalidate
+
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/Build/*
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/Il2CppData/Metadata/global-metadata.dat
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/RuntimeInitializeOnLoads.json
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/ScriptingAssemblies.json
+  Cache-Control: no-cache, no-store, must-revalidate
+
+/GlobalGameManagers
+  Cache-Control: no-cache, no-store, must-revalidate
