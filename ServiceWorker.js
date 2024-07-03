@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-PianoLand-0.2"; // Version incremented
+const cacheName = "DefaultCompany-PianoLand-0.1"; // Version incremented
 const contentToCache = [
     "Build/pianoland.loader.js",
     "Build/pianoland.framework.js",
