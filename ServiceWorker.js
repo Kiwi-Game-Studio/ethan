@@ -3,7 +3,7 @@
 const CACHE_NAME = 'pianoland_0.0.10'; // Replace with a unique name for your app cache
 
 self.addEventListener('install', function(event) {
-    console.log('[Service Worker] Installing Service Worker ...');
+    console.log('[Service Worker] Installing Service Worker ... 123');
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
