@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
@@ -7,6 +8,20 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
     <link rel="manifest" href="manifest.webmanifest">
+    <!-- Register Service Worker -->
+    <script>
+      window.addEventListener("load", function () {
+        if ("serviceWorker" in navigator) {
+          navigator.serviceWorker.register("ServiceWorker.js")
+            .then(function() {
+              console.log("Service Worker Registered");
+            })
+            .catch(function(error) {
+              console.error("Service Worker Registration Failed:", error);
+            });
+        }
+      });
+    </script>
   </head>
   <body>
     <div id="unity-container">
@@ -20,12 +35,6 @@
       <div id="unity-warning"> </div>
     </div>
     <script>
-      window.addEventListener("load", function () {
-        if ("serviceWorker" in navigator) {
-          navigator.serviceWorker.register("ServiceWorker.js");
-        }
-      });
-
       var container = document.querySelector("#unity-container");
       var canvas = document.querySelector("#unity-canvas");
       var loadingBar = document.querySelector("#unity-loading-bar");
