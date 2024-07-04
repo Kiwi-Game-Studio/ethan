@@ -1,26 +1,60 @@
 // ServiceWorker.js
 
-const CACHE_NAME = 'pianoland_0.0.11'; // Replace with a unique name for your app cache
+const CACHE_PREFIX = 'pianoland'; // Prefix for cache names
+let CURRENT_CACHE_VERSION = '0.0.12'; // Initial cache version, update as needed
+const CACHE_NAME = `${CACHE_PREFIX}_${CURRENT_CACHE_VERSION}`;
 
 self.addEventListener('install', function(event) {
-    console.log('[Service Worker] Installing Service Worker ... ' + CACHE_NAME +  ' a');
+    console.log('[Service Worker] Installing Service Worker ... ' + CACHE_NAME);
+    
     event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(function(cache) {
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== CACHE_NAME) {
+                        console.log('[Service Worker] Removing old cache', cacheName);
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+        .then(function() {
+            return caches.open(CACHE_NAME).then(function(cache) {
                 console.log('[Service Worker] Pre-caching App Shell');
                 // Cache Unity WebGL build files or other important assets here
-                cache.addAll([
+                return cache.addAll([
                     '/',
                     '/index.html',
                     '/TemplateData/favicon.ico',
                     '/TemplateData/style.css',
-                    '/Build/pianoland_0.0.11.loader.js', // Example Unity WebGL loader script
-                    '/Build/pianoland_0.0.11.data',  // Example Unity WebGL data file
-                    '/Build/pianoland_0.0.11.framework.js', // Example Unity WebGL framework file
-                    '/Build/pianoland_0.0.11.wasm', // Example Unity WebGL code file
+                    '/Build/pianoland_0.0.12.loader.js', // Example Unity WebGL loader script
+                    '/Build/pianoland_0.0.12.data',      // Example Unity WebGL data file
+                    '/Build/pianoland_0.0.12.framework.js', // Example Unity WebGL framework file
+                    '/Build/pianoland_0.0.12.wasm',      // Example Unity WebGL code file
                     // Add other files your application needs to function offline
                 ]);
-            })
+            });
+        })
+    );
+});
+
+self.addEventListener('fetch', function(event) {
+    console.log('[Service Worker] Fetch Service Worker ...');
+    event.respondWith(
+        caches.match(event.request).then(function(response) {
+            // Return cached response if found
+            if (response) {
+                return response;
+            }
+
+            // Otherwise, fetch from network and cache
+            return fetch(event.request).then(function(res) {
+                return caches.open(CACHE_NAME).then(function(cache) {
+                    cache.put(event.request.url, res.clone());
+                    return res;
+                });
+            });
+        })
     );
 });
 
@@ -30,33 +64,16 @@ self.addEventListener('activate', function(event) {
         caches.keys().then(function(cacheNames) {
             return Promise.all(
                 cacheNames.map(function(cacheName) {
-                    if (cacheName !== CACHE_NAME) {
+                    if (cacheName.startsWith(CACHE_PREFIX) && cacheName !== CACHE_NAME) {
                         console.log('[Service Worker] Removing old cache', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
         })
-    );
-    return self.clientsclaim();
-});
-
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.match(event.request)
-            .then(function(response) {
-                if (response) {
-                    return response;
-                } else {
-                    return fetch(event.request)
-                        .then(function(res) {
-                            return caches.open(CACHE_NAME)
-                                .then(function(cache) {
-                                    cache.put(event.request.url, res.clone());
-                                    return res;
-                                });
-                        });
-                }
-            })
+        .then(function() {
+            console.log('[Service Worker] Claiming clients for version', CURRENT_CACHE_VERSION);
+            return self.clients.claim();
+        })
     );
 });
