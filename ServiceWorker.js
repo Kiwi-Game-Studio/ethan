@@ -1,9 +1,9 @@
 // ServiceWorker.js
 
-const CACHE_NAME = 'pianoland_0.0.10'; // Replace with a unique name for your app cache
+const CACHE_NAME = 'pianoland_0.0.11'; // Replace with a unique name for your app cache
 
 self.addEventListener('install', function(event) {
-    console.log('[Service Worker] Installing Service Worker ... 123');
+    console.log('[Service Worker] Installing Service Worker ... ' + CACHE_NAME);
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
@@ -14,10 +14,10 @@ self.addEventListener('install', function(event) {
                     '/index.html',
                     '/TemplateData/favicon.ico',
                     '/TemplateData/style.css',
-                    '/Build/pianoland_0.0.10.loader.js', // Example Unity WebGL loader script
-                    '/Build/pianoland_0.0.10.data',  // Example Unity WebGL data file
-                    '/Build/pianoland_0.0.10.framework.js', // Example Unity WebGL framework file
-                    '/Build/pianoland_0.0.10.wasm', // Example Unity WebGL code file
+                    '/Build/pianoland_0.0.11.loader.js', // Example Unity WebGL loader script
+                    '/Build/pianoland_0.0.11.data',  // Example Unity WebGL data file
+                    '/Build/pianoland_0.0.11.framework.js', // Example Unity WebGL framework file
+                    '/Build/pianoland_0.0.11.wasm', // Example Unity WebGL code file
                     // Add other files your application needs to function offline
                 ]);
             })
