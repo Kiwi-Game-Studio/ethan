@@ -1,7 +1,7 @@
 // ServiceWorker.js
 
 const CACHE_PREFIX = 'pianoland'; // Prefix for cache names
-let CURRENT_CACHE_VERSION = '0.0.14'; // Initial cache version, update as needed
+let CURRENT_CACHE_VERSION = '0.0.15'; // Initial cache version, update as needed
 const CACHE_NAME = `${CACHE_PREFIX}_${CURRENT_CACHE_VERSION}`;
 
 self.addEventListener('install', function(event) {
@@ -27,10 +27,10 @@ self.addEventListener('install', function(event) {
                     '/index.html',
                     '/TemplateData/favicon.ico',
                     '/TemplateData/style.css',
-                    '/Build/pianoland_0.0.14.loader.js', // Example Unity WebGL loader script
-                    '/Build/pianoland_0.0.14.data',      // Example Unity WebGL data file
-                    '/Build/pianoland_0.0.14.framework.js', // Example Unity WebGL framework file
-                    '/Build/pianoland_0.0.14.wasm',      // Example Unity WebGL code file
+                    '/Build/pianoland_0.0.15.loader.js', // Example Unity WebGL loader script
+                    '/Build/pianoland_0.0.15.data',      // Example Unity WebGL data file
+                    '/Build/pianoland_0.0.15.framework.js', // Example Unity WebGL framework file
+                    '/Build/pianoland_0.0.15.wasm',      // Example Unity WebGL code file
                     // Add other files your application needs to function offline
                 ]);
             });
