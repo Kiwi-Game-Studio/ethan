@@ -43,3 +43,29 @@ self.addEventListener("fetch", function (e) {
     })
   );
 });
+
+self.addEventListener("fetch", function (e) {
+  e.respondWith(
+    caches.open(cacheName).then(function (cache) {
+      return cache.match(e.request).then(function (response) {
+        return (
+          response ||
+          fetch(e.request).then(function (response) {
+            // Check if the response is valid before caching
+            if (
+              !response ||
+              response.status !== 200 ||
+              response.type !== "basic"
+            ) {
+              return response;
+            }
+
+            cache.put(e.request, response.clone());
+            return response;
+          })
+        );
+      });
+    })
+  );
+});
+
