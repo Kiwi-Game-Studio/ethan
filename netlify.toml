@@ -1,41 +1,43 @@
+[build]
+  publish = "."  # Ensure this matches the root of your project directory
+
 [[headers]]
-  for = "*.html"
+  for = "/*.html"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
 [[headers]]
-  for = "*.js"
+  for = "/Build/*.js"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
 [[headers]]
-  for = "*.wasm"
+  for = "/Build/*.wasm"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
 [[headers]]
-  for = "*.loader"
+  for = "/Build/*.loader"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
 [[headers]]
-  for = "*.framework"
+  for = "/Build/*.framework"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
     Expires = "0"
 
-    
 [[headers]]
-  for = "*.data"
+  for = "/Build/*.data"
   [headers.values]
     Cache-Control = "no-cache, no-store, must-revalidate"
     Pragma = "no-cache"
