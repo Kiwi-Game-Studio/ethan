@@ -5,7 +5,7 @@ const contentToCache = [
     "Build/pianoland_0.0.6.data",
     "Build/pianoland_0.0.6.wasm",
     "TemplateData/style.css",
-    "index.html"  // Include index.html to ensure it is not cached old version
+    "index.html"
 ];
 
 // Install event - cache the app shell

@@ -1,5 +1,6 @@
 [build]
-  publish = "."  # Ensure this matches the root of your project directory
+  publish = "."
+  # Ensure no build command unless necessary
 
 [[headers]]
   for = "/*.html"
