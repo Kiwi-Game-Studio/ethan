@@ -1,9 +1,9 @@
-const cacheName = "DefaultCompany-PianoLand-0.0.4";
+const cacheName = "DefaultCompany-PianoLand-0.0.6";
 const contentToCache = [
-    "Build/pianoland_0.0.4.loader.js",
-    "Build/pianoland_0.0.4.framework.js",
-    "Build/pianoland_0.0.4.data",
-    "Build/pianoland_0.0.4.wasm",
+    "Build/pianoland_0.0.6.loader.js",
+    "Build/pianoland_0.0.6.framework.js",
+    "Build/pianoland_0.0.6.data",
+    "Build/pianoland_0.0.6.wasm",
     "TemplateData/style.css"
 
 ];
