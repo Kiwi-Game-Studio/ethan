@@ -1,7 +1,7 @@
 // ServiceWorker.js
 
 const CACHE_PREFIX = 'pianoland'; // Prefix for cache names
-let CURRENT_CACHE_VERSION = '0.0.16'; // Initial cache version, update as needed
+let CURRENT_CACHE_VERSION = '0.0.17'; // Initial cache version, update as needed
 const CACHE_NAME = `${CACHE_PREFIX}_${CURRENT_CACHE_VERSION}`;
 
 self.addEventListener('install', function(event) {
@@ -27,10 +27,10 @@ self.addEventListener('install', function(event) {
                     '/index.html',
                     '/TemplateData/favicon.ico',
                     '/TemplateData/style.css',
-                    '/Build/pianoland_0.0.16.loader.js', // Example Unity WebGL loader script
-                    '/Build/pianoland_0.0.16.data',      // Example Unity WebGL data file
-                    '/Build/pianoland_0.0.16.framework.js', // Example Unity WebGL framework file
-                    '/Build/pianoland_0.0.16.wasm',      // Example Unity WebGL code file
+                    '/Build/pianoland_0.0.17.loader.js', // Example Unity WebGL loader script
+                    '/Build/pianoland_0.0.17.data',      // Example Unity WebGL data file
+                    '/Build/pianoland_0.0.17.framework.js', // Example Unity WebGL framework file
+                    '/Build/pianoland_0.0.17.wasm',      // Example Unity WebGL code file
                     // Add other files your application needs to function offline
                 ]);
             });
@@ -77,3 +77,17 @@ self.addEventListener('activate', function(event) {
         })
     );
 });
+/*
+        if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/ServiceWorker.js')
+          .then(function(registration) {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch(function(error) {
+            console.error('Service Worker registration failed:', error);
+          });
+      });
+      }
+
+      */
